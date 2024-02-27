@@ -1,76 +1,57 @@
 <template>
-    <div class="message_container">
-        <div class="search">
-            <el-form :inline="true" :model="formInline" class="demo-form-inline">
-                <el-form-item label="姓名">
-                    <el-input v-model="formInline.user" placeholder="请输入学生姓名" clearable />
-                </el-form-item>
-                <el-form-item label="学号">
-                    <el-input v-model="formInline.user" placeholder="请输入学号" clearable />
-                </el-form-item>
-                <el-form-item>
-                    <el-button type="primary" @click="onSubmit">查询</el-button>
-                </el-form-item>
-            </el-form>
-        </div>
-        <div class="operate">
-            <el-row class="mb-4">
-                <el-button type="danger">批量删除</el-button>
-                <el-button type="primary">新增学生</el-button>
-            </el-row>
+  <div class="message_container">
+    <div class="search">
+      <el-form :inline="true" :model="formInline" class="demo-form-inline">
+        <el-form-item label="姓名">
+          <el-input v-model="formInline.user" placeholder="请输入学生姓名" clearable />
+        </el-form-item>
+        <el-form-item label="学号">
+          <el-input v-model="formInline.user" placeholder="请输入学号" clearable />
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="onSubmit">查询</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
+    <div class="operate">
+      <el-row class="mb-4">
+        <el-button type="danger">批量删除</el-button>
+        <el-button type="primary">新增学生</el-button>
+      </el-row>
 
 
-
-            <form ref="uploadForm" 
-            enctype="multipart/form-data" 
-            class="upload-form" 
-            @submit.prevent="submitFile">
-        <input type="file" 
-               name="file" 
-               id="file" 
-               class="input-file"
-               ref="file"
-               @change="handleFileChange" />
+<!-- 
+      <form ref="uploadForm" enctype="multipart/form-data" class="upload-form" @submit.prevent="submitFile">
+        <input type="file" name="file" id="file" class="input-file" ref="file" @change="handleFileChange" />
         <label for="file" class="btn">选择文件</label>
-        <!-- 进度条展示 -->
+         进度条展示 
         <p v-if="showProgress">上传进度：{{ percent }} %</p>
-        <button type="submit" 
-                class="upload-btn" 
-                :disabled="!selectedFile">上传</button>
+        <button type="submit" class="upload-btn" :disabled="!selectedFile">上传</button>
       </form>
 
+ -->
 
 
-
-        </div>
-        <div class="content" v-if="student.length > 0">学生信息</div>
-        <el-empty v-else description="暂无数据" />
-        <div class="page">
-            <el-pagination 
-              v-model:current-page="currentPage4" 
-              v-model:page-size="pageSize4"
-              :page-sizes="[100, 200, 300, 400]" 
-              :small="small" 
-              :disabled="disabled" 
-              :background="background"
-              layout="prev, pager, next, jumper,->,sizes,total"
-              :total="400" 
-              @size-change="handleSizeChange"
-             @current-change="handleCurrentChange" 
-            />
-        </div>
     </div>
+    <div class="content" v-if="student.length > 0">学生信息</div>
+    <el-empty v-else description="暂无数据" />
+    <div class="page">
+      <el-pagination v-model:current-page="currentPage4" v-model:page-size="pageSize4" :page-sizes="[100, 200, 300, 400]"
+        :small="small" :disabled="disabled" :background="background" layout="prev, pager, next, jumper,->,sizes,total"
+        :total="400" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
 import { reactive } from 'vue'
 import { ref } from 'vue'
 
-let student=''
+let student = ''
 
-let selectedFile= ref(null)  // 选中的文件
-let showProgress= ref(false)  // 是否展示上传进度条
-let percent=ref(0)    // 上传进度百分比
+let selectedFile = ref(null)  // 选中的文件
+let showProgress = ref(false)  // 是否展示上传进度条
+let percent = ref(0)    // 上传进度百分比
 
 const currentPage4 = ref(4)
 const pageSize4 = ref(100)
@@ -86,52 +67,52 @@ const handleCurrentChange = (val: number) => {
 }
 
 const formInline = reactive({
-    user: '',
-    region: '',
-    date: '',
+  user: '',
+  region: '',
+  date: '',
 })
 
 const onSubmit = () => {
-    console.log('submit!')
+  console.log('submit!')
 }
 
 
-function handleFileChange (event) {
-      selectedFile = event.target.files[0];
-    }
-function    submitFile () {
-      if (!selectedFile) return;
-      // 新建 from 对象
-      const formData = new FormData();
-      formData.append('file', selectedFile, selectedFile.name);
+// function handleFileChange (event) {
+//       selectedFile = event.target.files[0];
+//     }
+// function    submitFile () {
+//       if (!selectedFile) return;
+//       // 新建 from 对象
+//       const formData = new FormData();
+//       formData.append('file', selectedFile, selectedFile.name);
 
-      showProgress = true;
-      const config = {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        },
-        onUploadProgress: progressEvent => {
-          // 计算上传进度百分比
-          this.percent = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-        },
-      };
-      axios.post('/api/upload', formData, config)
-        .then((response) => {
-          console.log(response);
-          this.showProgress = false;  // 移除 progress 条
-        })
-        .catch((error) => {
-          console.log(error);
-          this.showProgress = false;
-        });
-    }
+//       showProgress = true;
+//       const config = {
+//         headers: {
+//           'Content-Type': 'multipart/form-data'
+//         },
+//         onUploadProgress: progressEvent => {
+//           // 计算上传进度百分比
+//           this.percent = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+//         },
+//       };
+//       axios.post('/api/upload', formData, config)
+//         .then((response) => {
+//           console.log(response);
+//           this.showProgress = false;  // 移除 progress 条
+//         })
+//         .catch((error) => {
+//           console.log(error);
+//           this.showProgress = false;
+//         });
+//     }
 
 </script>
 
 <style scoped>
 .message_container {
-    .search {
-        margin-top: 10px;
-    }
+  .search {
+    margin-top: 10px;
+  }
 }
 </style>
