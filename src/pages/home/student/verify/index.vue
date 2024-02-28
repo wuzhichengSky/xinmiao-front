@@ -3,25 +3,28 @@
 
         <div class="card">
             <div class="time">
-                <el-card class="box-card">
-                    <template #header>
-                        <div class="card-header">
-                            <span>Card name</span>
-                            <el-button class="button" text>Operation button</el-button>
-                        </div>
-                    </template>
-                    <div v-for="o in 4" :key="o" class="text item">{{ 'List item ' + o }}</div>
-                    <template #footer>Footer content</template>
+                <el-card class="box-card1">
+                    <p>2月28</p>
                 </el-card>
             </div>
             <div class="today_add">
-                <el-card class="box-card">
-                    <div v-for="o in 4" :key="o" class="text item">{{ 'List item ' + o }}</div>
+                <el-card class="box-card2">
+                    <div class="today_icon">
+                        <el-icon>
+                            <Tickets />
+                        </el-icon>
+                    </div>
+                    <div class="today_text">
+                        <span>今日新增审核</span>
+                        <p>66</p>
+                    </div>
                 </el-card>
             </div>
             <div class="total">
-                <el-card class="box-card">
-                    <div v-for="o in 4" :key="o" class="text item">{{ 'List item ' + o }}</div>
+                <el-card class="box-card3">
+                    <el-icon><Coin /></el-icon>
+                    <p>待审总和</p>
+                    <p>222</p>
                 </el-card>
             </div>
         </div>
@@ -38,6 +41,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { Tickets,Coin } from '@element-plus/icons-vue'
 
 let student = ''
 
@@ -61,17 +65,29 @@ const handleCurrentChange = (val: number) => {
 
     .card {
         display: flex;
+
         .time {
             width: 10%;
             margin-right: 50px;
+            height: 100px;
         }
-        .today_add{
-            width:30%;
+
+        .today_add {
+            display: flex;
+            width: 200px;
             margin-right: 50px;
+
+            .today_icon,
+            .today_text {
+                display: flex;
+                /* 将子项设置为 Flexbox */
+                flex-direction: row;
+                /* 设置为水平排列 */
+            }
         }
-        .total{
+
+        .total {
             width: 30%;
         }
     }
-}
-</style>
+}</style>
