@@ -4,27 +4,42 @@
         <div class="card">
             <div class="time">
                 <el-card class="box-card1">
-                    <p>2月28</p>
+                    <template #header>
+                        <div class="card-header">
+                            <span>2月</span>
+                            <el-button class="button" text>28号</el-button>
+                        </div>
+                    </template>
+                    <div v-for="o in 4" :key="o" class="text item">{{ 'List item ' + o }}</div>
+                    <template #footer class="footer">Footer content</template>
                 </el-card>
             </div>
             <div class="today_add">
                 <el-card class="box-card2">
-                    <div class="today_icon">
-                        <el-icon>
-                            <Tickets />
-                        </el-icon>
-                    </div>
-                    <div class="today_text">
-                        <span>今日新增审核</span>
-                        <p>66</p>
+                    <div class="content">
+                        <div class="left">
+                            <el-icon>
+                                <Tickets />
+                            </el-icon>
+                        </div>
+                        <div class="right">
+                            <p>今日新增审核</p>
+                            <p>66</p>
+                        </div>
                     </div>
                 </el-card>
             </div>
             <div class="total">
                 <el-card class="box-card3">
-                    <el-icon><Coin /></el-icon>
-                    <p>待审总和</p>
-                    <p>222</p>
+                    <div class="content">
+                        <div class="left"><el-icon>
+                                <Coin />
+                            </el-icon></div>
+                        <div class="right">
+                            <p>待审总和</p>
+                            <p>222</p>
+                        </div>
+                    </div>
                 </el-card>
             </div>
         </div>
@@ -41,7 +56,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Tickets,Coin } from '@element-plus/icons-vue'
+import { Tickets, Coin } from '@element-plus/icons-vue'
 
 let student = ''
 
@@ -67,27 +82,73 @@ const handleCurrentChange = (val: number) => {
         display: flex;
 
         .time {
-            width: 10%;
-            margin-right: 50px;
-            height: 100px;
+            display: flex;
+            padding: 5px;
+            margin-right: 30px;
+
+            .box-card1 {
+                width: 130px;
+                height: 90px;
+
+                
+            }
         }
 
         .today_add {
             display: flex;
-            width: 200px;
-            margin-right: 50px;
+            padding: 5px;
+            margin-right: 30px;
 
-            .today_icon,
-            .today_text {
+            .box-card2 {
+                width: 250px;
+                height: 90px;
                 display: flex;
-                /* 将子项设置为 Flexbox */
-                flex-direction: row;
-                /* 设置为水平排列 */
+                align-items: center;
+
+                .content {
+                    display: flex;
+                    align-items: center;
+                    /* 垂直对齐  */
+
+                    .left {
+                        margin-right: 7px;
+                    }
+                    .right {
+                        p {
+                            margin: 5px;
+                        }
+                    }
+                }
             }
         }
 
         .total {
-            width: 30%;
+            display: flex;
+            padding: 5px;
+            margin-right: 30px;
+
+            .box-card3 {
+                width: 200px;
+                height: 90px;
+                display: flex;
+                align-items: center;
+
+                .content {
+                    display: flex;
+                    align-items: center;
+                    /* 垂直对齐  */
+
+                    .left {
+                        margin-right: 7px;
+                    }
+                    .right {
+                        p {
+                            margin: 5px;
+                        }
+                    }
+                }
+            }
         }
     }
-}</style>
+}
+</style>

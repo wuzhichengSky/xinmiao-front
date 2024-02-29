@@ -16,7 +16,7 @@
     <div class="operate">
       <el-row class="mb-4">
         <el-button type="danger">批量删除</el-button>
-        <el-button type="primary">新增学生</el-button>
+        <el-button type="primary"  @click="changeActive('/home/student/add')">新增学生</el-button>
       </el-row>
 
 
@@ -46,6 +46,9 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
 import { ref } from 'vue'
+import { useRouter } from "vue-router";
+
+let $router = useRouter();
 
 let student = ''
 
@@ -75,6 +78,12 @@ const formInline = reactive({
 const onSubmit = () => {
   console.log('submit!')
 }
+
+//左侧菜单点击事件的回调
+const changeActive = (path: string) => {
+  //跳转到对应二级路由
+  $router.push({ path });
+};
 
 
 // function handleFileChange (event) {

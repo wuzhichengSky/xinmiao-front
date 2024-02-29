@@ -58,6 +58,13 @@ export default createRouter({
                             meta: {
                                 title: '信息管理'
                             }
+                        },
+                        {
+                            path: 'add',
+                            component: () => import('@/pages/home/student/message/add/index.vue'),
+                            meta: {
+                                title: '学生管理'
+                            }
                         }
                     ]
                 },

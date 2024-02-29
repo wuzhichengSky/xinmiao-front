@@ -1,5 +1,6 @@
 //路由鉴权:就是路由能不能被访问到权限设置->全局守卫完成
 //引入路由器
+
 import router from "./router";
 //引入进度条
 import Nprogress from 'nprogress';
