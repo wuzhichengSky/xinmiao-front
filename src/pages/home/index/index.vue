@@ -10,7 +10,7 @@
                             </el-icon>
                         </div>
                         <div class="right">
-                            <p>1008/2000</p>
+                            <p>{{ studentIdentifyTotal }}/{{ studentTotal }}</p>
                             <p>注册人数/学生总数</p>
                         </div>
                     </div>
@@ -25,7 +25,7 @@
                             </el-icon>
                         </div>
                         <div class="right">
-                            <p>66</p>
+                            <p> {{ taskTotal }} </p>
                             <p>发布任务数</p>
                         </div>
                     </div>
@@ -68,7 +68,10 @@
         <div class="bottom">
             <div class="card_map">
                 <el-card class="box-map">
-                    <div class="map">我是地图</div>
+                    <div class="content">
+                        <div class="left">学生注册数据图</div>
+                    <div class="right">学生任务完成情况图</div>
+                    </div>
                 </el-card>
             </div>
         </div>
@@ -80,6 +83,30 @@
 import {
     UserFilled, List, VideoCameraFilled, Comment
 } from "@element-plus/icons-vue";
+import { onMounted } from "vue";
+import { ref } from "vue";
+import { ResponseData } from "@/api/user/type";
+import { reqStudentTotal, reqStudentIdentifyTotal } from "@/api/user";
+import { reqTaskTotal } from "@/api/task";
+
+
+let studentTotal = ref('')
+let studentIdentifyTotal = ref('')
+let taskTotal = ref('')
+
+onMounted(async () => {
+    let result1: ResponseData = await reqStudentTotal();
+    let result2: ResponseData = await reqStudentIdentifyTotal();
+    let result3: ResponseData = await reqTaskTotal();
+    if (result1.code == 200 && result2.code == 200 && result3.code == 200) {
+        studentTotal.value = String(result1.data)
+        studentIdentifyTotal.value = String(result2.data)
+        taskTotal.value = String(result3.data)
+        return 'ok';
+    } else {
+        return Promise.reject(new Error(result1.message));
+    }
+});
 
 </script>
 
@@ -229,8 +256,18 @@ import {
 }
 
 .bottom {
+
     .box-map {
         height: 320px;
+        .content {
+            display: flex;
+            .left{
+                flex: 6
+            }
+            .right {
+                flex: 4
+            }
+        }
     }
 }
 </style>

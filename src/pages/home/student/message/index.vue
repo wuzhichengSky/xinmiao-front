@@ -16,11 +16,11 @@
     <div class="operate">
       <el-row class="mb-4">
         <el-button type="danger">批量删除</el-button>
-        <el-button type="primary"  @click="changeActive('/home/student/add')">新增学生</el-button>
+        <el-button type="primary" @click="changeActive('/home/student/add')">新增学生</el-button>
       </el-row>
 
 
-<!-- 
+      <!-- 
       <form ref="uploadForm" enctype="multipart/form-data" class="upload-form" @submit.prevent="submitFile">
         <input type="file" name="file" id="file" class="input-file" ref="file" @change="handleFileChange" />
         <label for="file" class="btn">选择文件</label>
@@ -33,8 +33,15 @@
 
 
     </div>
-    <div class="content" v-if="student.length > 0">学生信息</div>
-    <el-empty v-else description="暂无数据" />
+    <div class="content">
+      <el-table :data="tableData" stripe style="width: 100%">
+        <el-table-column prop="date" label="Date" width="180" />
+        <el-table-column prop="name" label="Name" width="180" />
+        <el-table-column prop="address" label="Address" />
+      </el-table>
+    </div>
+    <!-- <div class="content" v-if="student.length > 0">学生信息</div> -->
+    <!-- <el-empty v-else description="暂无数据" /> -->
     <div class="page">
       <el-pagination v-model:current-page="currentPage4" v-model:page-size="pageSize4" :page-sizes="[100, 200, 300, 400]"
         :small="small" :disabled="disabled" :background="background" layout="prev, pager, next, jumper,->,sizes,total"
@@ -50,17 +57,35 @@ import { useRouter } from "vue-router";
 
 let $router = useRouter();
 
-let student = ''
-
-let selectedFile = ref(null)  // 选中的文件
-let showProgress = ref(false)  // 是否展示上传进度条
-let percent = ref(0)    // 上传进度百分比
 
 const currentPage4 = ref(4)
 const pageSize4 = ref(100)
 const small = ref(false)
 const background = ref(false)
 const disabled = ref(false)
+
+const tableData = [
+  {
+    date: '2016-05-03',
+    name: 'Tom',
+    address: 'No. 189, Grove St, Los Angeles',
+  },
+  {
+    date: '2016-05-02',
+    name: 'Tom',
+    address: 'No. 189, Grove St, Los Angeles',
+  },
+  {
+    date: '2016-05-04',
+    name: 'Tom',
+    address: 'No. 189, Grove St, Los Angeles',
+  },
+  {
+    date: '2016-05-01',
+    name: 'Tom',
+    address: 'No. 189, Grove St, Los Angeles',
+  },
+]
 
 const handleSizeChange = (val: number) => {
   console.log(`${val} items per page`)

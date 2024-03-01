@@ -1,6 +1,5 @@
 //定义用户相关的仓库
 import { defineStore } from "pinia";
-//引入获取验证码的请求方法
 import { reqAdminLogin } from "@/api/user";
 import { AdminLogin } from "@/api/user/type";
 import type { UserState } from './interface'
